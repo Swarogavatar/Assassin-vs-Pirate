@@ -3,6 +3,8 @@
 //this script contains progress bar as well as winning and loosing logic
 //the progress bar value is an int between 0 and 100, with the staring value of 50
 
+//changes made immediately afer enthering ez mode are in PlayerEnteredEasyMode()
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class GameState : MonoBehaviour {
 
+    Camera camera;
+
     //reference to the slider on canvas
     public Slider ProgressBar;
 
@@ -18,8 +22,11 @@ public class GameState : MonoBehaviour {
     //  ( ͡° ͜ʖ ͡°) yep   this clip 
     public AudioSource icrievritim;
 
-    public Keymanager combo;
+    //references to other scripts
+    public Keymanager keymanager;
+    public Fmash fmash;
 
+    private bool EnableEzMode;
     private bool EasyMode;
 
     [SerializeField]
@@ -40,7 +47,9 @@ public class GameState : MonoBehaviour {
         ProgressBar.value = StartValue;
         EasyMode = false;
         AlreadyQueued = false;
+        camera = Camera.main;
         StartCoroutine("DecreaseProgressBar"); // decreases progress bar value every second
+        StartCoroutine("CheckForEzMode");
     }
 	
 	// Update is called once per frame
@@ -81,27 +90,17 @@ public class GameState : MonoBehaviour {
     //checking if player pressed keys for ez mode - !!!!NEEDS TO BE CHANGED TO SMF ELSE BEFORE BUILD!!!!
     private bool PlayerWantsEzMode()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("E");
-            if (Input.GetKey(KeyCode.R))
+            //50% code
+            Debug.Log("50%");
+            if (Input.GetKey(KeyCode.Keypad9))
             {
-                Debug.Log("ER");
-                if (Input.GetKey(KeyCode.T))
-                {
-                    Debug.Log("ERT");
-                    if (Input.GetKey(KeyCode.U))
-                    {
-                        Debug.Log("ERTU");
-                        if (Input.GetKeyDown(KeyCode.O))
-                        {
-                            Debug.Log("ERTUO");
-                            Debug.Log("ENTER EZ MODE");
-                            return true;
-                        }
-                    }
-                }
+                //100% code
+                Debug.Log("Ez mode!!!");
+                return true;
             }
+  
         }
         return false;
     }
@@ -109,9 +108,8 @@ public class GameState : MonoBehaviour {
     private void PlayerEnteredEasyMode()
     {
         LossPerSecond = 2;
-        combo.ChangeTimetoEzMode(TimeForComboEzMode);
-        ProgressBar.GetComponent<Image>().color = new Color(255, 0, 255);
-
+        keymanager.ChangeTimetoEzMode(TimeForComboEzMode);
+        camera.backgroundColor = new Color(255, 0, 255);
     }
 
     //coroutine that decreases progress bar value by LossperSecond variable every second
@@ -123,5 +121,40 @@ public class GameState : MonoBehaviour {
             //Debug.Log("Current value: " + ProgressBar.value);
             yield return new WaitForSeconds(1.0f);
         }        
+    }
+
+    IEnumerator CheckForEzMode()
+    {
+        for (; ; )
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                //20% code
+                Debug.Log("E");
+                if (Input.GetKey(KeyCode.R))
+                {
+                    //40% code
+                    Debug.Log("ER");
+                    if (Input.GetKey(KeyCode.T))
+                    {
+                        //60% code
+                        Debug.Log("ERT");
+                        if (Input.GetKey(KeyCode.U))
+                        {
+                            //80% code
+                            Debug.Log("ERTU");
+                            if (Input.GetKeyDown(KeyCode.O))
+                            {
+                                //100%
+                                Debug.Log("ERTUO");
+                                Debug.Log("It is done");
+                                EnableEzMode = true;
+                            }
+                        }
+                    }
+                }
+            }
+            yield return null;
+        }
     }
 }

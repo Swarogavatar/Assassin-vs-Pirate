@@ -539,7 +539,8 @@ MonoBehaviour:
   ProgressBar: {fileID: 1581218965}
   EzModeBar: {fileID: 231590278}
   icrievritim: {fileID: 528013521}
-  combo: {fileID: 0}
+  keymanager: {fileID: 528013517}
+  fmash: {fileID: 528013520}
   TimeForComboEzMode: 7
   StartValue: 50
   LossPerSecond: 4
