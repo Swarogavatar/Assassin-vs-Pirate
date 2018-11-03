@@ -118,7 +118,6 @@ public class Keymanager : MonoBehaviour {
                         StartCoroutine("KeyPress");
                         Debug.Log("Correct! Key: Ctrl -" );
 
-
                     }
                     //incorrect logic
                     break;
@@ -143,7 +142,10 @@ public class Keymanager : MonoBehaviour {
             
         }
     }
-
+    public void ChangeTimetoEzMode(float ezmodetime)
+    {
+        TimeForCombos = ezmodetime;
+    }
     //coroutine responsible for displaying according message based on player action
     //also progress bar value is affected form here
     IEnumerator KeyPress()

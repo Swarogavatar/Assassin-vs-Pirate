@@ -56,7 +56,7 @@ public class Fmash : MonoBehaviour {
     {
         for(; ; )
         {
-            Debug.Log("This second F was pressed " + PressesThisSecond + " times.");
+           // Debug.Log("This second F was pressed " + PressesThisSecond + " times.");
 
             if(PressesThisSecond > minPerSecond)
             {
